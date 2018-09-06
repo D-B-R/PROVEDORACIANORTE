@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="editarContratoDlg" appendTo="@(body)" closable="false"
+                  modal="true" resizable="true" 
+                  widgetVar="editarContratoDlg" header="Editar contrato" >
+            <h:form id="formEditarContrato">
+                <p:messages closable="true" autoUpdate="true" showIcon="true" />               
+                <h:panelGrid columns="2" >                    
+                    <p:selectOneMenu id="comboPagamento" converter="pagamentoConverter"  
+                                     required="true" requiredMessage="Escolha um status"  
+                                     value="#{contratoControle.temp.pagamento}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="Escolha um status" 
+                                      noSelectionOption="false"/>
+                        <f:selectItems value="#{solicitaContrato.pagamentos}" 
+                                       var="pag"
+                                       itemValue="#{pag}"
+                                       itemLabel="#{pag.nome}"/>
+                    </p:selectOneMenu> 
+                    <p:selectOneMenu id="comboStatus" converter="statusConverter"  
+                                     required="true" requiredMessage="Escolha um status"  
+                                     value="#{contratoControle.temp.status}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="Escolha um status" 
+                                      noSelectionOption="false"/>
+                        <f:selectItems value="#{solicitaContrato.status}" 
+                                       var="status"
+                                       itemValue="#{status}"
+                                       itemLabel="#{status.nome}"/>
+                    </p:selectOneMenu> 
+                </h:panelGrid>
+                <p:outputPanel style="width: 100%; text-align:center" layout="block">
+                    <p:commandButton value="Cancelar" icon="ui-icon-close"
+                                     oncomplete="PF('editarContratoDlg').hide()" immediate="true" 
+                                     update=":formPrincipal, :editarContratoDlg"/>
+                    <p:commandButton value="Salvar" icon="ui-icon-check"
+                                     action="#{contratoControle.alterarContrato()}" immediate="false"
+                                     oncomplete="PF('editarContratoDlg').hide()" 
+                                     update=" :editarContratoDlg, :formPrincipal"/>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

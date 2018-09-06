@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="editarServicoDlg" appendTo="@(body)" closable="false"
+                  modal="true" resizable="true" 
+                  widgetVar="editarServicoDlg" header="Editar serviço" >
+            <h:form id="formEditarServico">
+                <p:messages closable="true" autoUpdate="true" showIcon="true" />               
+                <h:panelGrid columns="2" >                    
+                    <p:selectOneMenu id="comboStatusServ" converter="statusServConverter"  
+                                     required="true" requiredMessage="Escolha um status"  
+                                     value="#{servicoControle.temp.status}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="Escolha um status" 
+                                      noSelectionOption="false"/>
+                        <f:selectItems value="#{solicitaServico.status}" 
+                                       var="status"
+                                       itemValue="#{status}"
+                                       itemLabel="#{status.nome}"/>
+                    </p:selectOneMenu> 
+                </h:panelGrid>
+                <p:outputPanel style="width: 100%; text-align:center" layout="block">
+                    <p:commandButton value="Cancelar" icon="ui-icon-close"
+                                     oncomplete="PF('editarServicoDlg').hide()" immediate="true" 
+                                     update=":formPrincipal, :editarServicoDlg"/>
+                    <p:commandButton value="Salvar" icon="ui-icon-check"
+                                     action="#{servicoControle.alterarServico()}" immediate="false"
+                                     oncomplete="PF('editarServicoDlg').hide()" 
+                                     update=" :editarServicoDlg, :formPrincipal"/>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

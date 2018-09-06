@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Gerenciar Serviços</title>
+            </f:facet>
+        </h:head>
+
+ <h:body style="background-image: url( http://mlmwireless.com.br/novo/wp-content/uploads/2015/12/fibra.jpeg); background-repeat: no-repeat; background-size: 100%">
+            <p/>
+            <h:form id="formPrincipal">
+                <p:separator />
+                <p:outputPanel style="width: 100%; text-align: right">
+                    <p:commandButton icon="ui-icon-arrowreturn-1-w" value="Voltar" type="button" onclick="window.location.href = '/Provedor/faces/menuMaster.xhtml'" />
+                    <h2 style="font-family: sans-serif; padding-right: 40%; color:white" >Gerenciar Serviços</h2>
+
+                </p:outputPanel>
+                <p:commandButton icon="ui-icon-person" style=" text-align: center" styleClass="botaoLink" value="Cadastrar novo serviço"                 
+                                 action="#{servicoControle.abrirPopupNovo()}"
+                                 update="@form, :popupNovo" />  
+                <p/>
+                <p:separator/>
+                <p></p>
+                <p:dataTable id="tabServicos" emptyMessage="Nenhum serviço cadastrado"
+                             var="servicos" value="#{servicoControle.servicos}">
+                    <p:column headerText="Serviço ">
+                        <h:outputText value="#{servicos.servico}"/>
+                    </p:column>
+                    <p:column headerText="Prestador">
+                        <h:outputText value="#{servicos.adm.nome}"/>
+                    </p:column>
+                    <p:column headerText="Cliente"> 
+                        <h:outputText value="#{servicos.usuario.nome}"/>
+                    </p:column>
+                    <p:column headerText="Status: "> 
+                        <h:outputText value="#{servicos.status.nome}"/>
+                    </p:column>
+                    <p:column  headerText="Opções">
+                        <table>
+                            <th>
+                            <p:commandButton style=" min-height: 30px" icon="ui-icon-trash" value=" "
+                                             actionListener="#{servicoControle.excluirServico(servicos)}"
+                                             update="@form">
+                                <p:confirm header="Excluir serviço"
+                                           message="Tem certeza que deseja excluir este serviço?"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            </th>
+                            <th>
+                            <p:commandButton style=" min-height: 30px" icon="ui-icon-pencil" value="" 
+                                             action="#{servicoControle.preparaEditarServico(servicos)}"
+                                             onclick="PF('editarServicoDlg').show()"
+                                             update="@form, :formEditarServico"/>
+                            </th>
+                        </table>
+                    </p:column>
+                </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:outputPanel style="width: 100%; text-align:center" layout="block"> 
+                        <p:commandButton value="sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:outputPanel>
+                </p:confirmDialog>
+            </h:form>
+            <!--novo suporte-->
+            <p:dialog closable="false" modal="true" header="Novo serviço" id="popupNovo"  
+                      widgetVar="popupNovo"  visible="#{servicoControle.mostraPopupNovo}"  >
+                <h:form id="formIncluirServico" >
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel style="padding: 10px; " value="Administrador: "/>
+                        <p:selectOneMenu id="comboADM" converter="admConverter"  
+                                         required="true" requiredMessage="Escolha um administrador"  
+                                         value="#{solicitaServico.servico.adm}" >
+                            <f:selectItem itemValue="#{null}" itemLabel="Escolha um administrador" 
+                                          noSelectionOption="false"/>
+                            <f:selectItems value="#{solicitaServico.adms}" 
+                                           var="adm"
+                                           itemValue="#{adm}"
+                                           itemLabel="#{adm.nome}"/>
+                        </p:selectOneMenu>  
+                        <p:outputLabel style="padding: 10px" value="Usuário: "/>
+                        <p:selectOneMenu id="comboUsuario" converter="usuarioConverter"  style="min-width: 200px"
+                                         required="true" requiredMessage="Selecione o usuário"  
+                                         value="#{solicitaServico.servico.usuario}" >
+                            <f:selectItem itemValue="#{null}" itemLabel="Escolha um usuário" 
+                                          noSelectionOption="false"/>
+                            <f:selectItems value="#{solicitaServico.usuarios}" 
+                                           var="usu"
+                                           itemValue="#{usu}"
+                                           itemLabel="#{usu.nome}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel style="padding: 10px" value="Serviço: "/>
+                        <p:inputText id="campoErro" value="#{solicitaServico.servico.servico}" 
+                                     maxlength="500" 
+                                     required="true" requiredMessage="Serviço obrigatório" > 
+                        </p:inputText>
+                    </h:panelGrid>
+                    <p:outputPanel style="width: 100%; text-align:center" layout="block">
+                        <p:commandButton value="Cancelar" action="#{servicoControle.fecharPopupNovo()}"
+                                         update=":popupNovo" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{solicitaServico.registraServico()}" 
+                                         update=":popupNovo, :formPrincipal"/>                           
+                    </p:outputPanel>
+                    <h:panelGrid columns="1">
+                        <p:messages showIcon="false" />
+                    </h:panelGrid>   
+                </h:form>
+            </p:dialog>
+            <ui:include src="servicoAlterar.xhtml" />
+        </h:body>
+    </f:view>
+</html>

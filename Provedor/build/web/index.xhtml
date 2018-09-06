@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Provedor</title>
+
+    </h:head>
+
+ <h:body style="background-image: url( http://mlmwireless.com.br/novo/wp-content/uploads/2015/12/fibra.jpeg); background-repeat: no-repeat; background-size: 100%">
+
+        <div id="principal">
+            <h:form>
+                <p/><br/>
+                <center>
+                    <div>
+                        <h1 style="color: white">PROVEDORA CIANORTE</h1> 
+                        <p/>
+                        <h4 style="color: white">Sua conexão com o mundo!</h4>
+                    </div>
+                </center>
+                <br/>
+                <br/>
+                <center>
+                    <h:panelGrid  columns="2">
+                        <h:outputLabel value="Login:" for="login" style="padding-bottom: 10px; font-weight:bold"/>
+                        <p:inputText  id="campoLogin" size="14" value="#{indexControle.adm.login}" 
+                                      maxlength="15" required="true" style="width:150px; height: 20px; line-height: 15px;" requiredMessage="Nome obrigatório" />
+
+                        <h:outputLabel value="Senha:" for="senha" style="font-weight:bold"/>
+                        <p:password feedback="false" size="14"  maxlength="16"
+                                    value="#{indexControle.adm.senha}"
+                                    required="true" style="width:150px; height: 20px; line-height: 15px;" requiredMessage="Senha obrigatória" />  
+                    </h:panelGrid>
+                    <table style="padding-left: 100px">
+                        <th>
+                            <p:commandButton value="Login" icon="ui-icon-check" ajax="false"
+                                             action="#{indexControle.autenticar()}" styleClass="ui-state-hover"/> 
+                        </th>
+                    </table>
+                </center>
+            </h:form> 
+        </div>
+    </h:body>
+</html>

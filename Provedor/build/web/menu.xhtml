@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>Provedor</title>
+            
+        </f:facet>
+    </h:head>
+ <h:body style="background-image: url( http://mlmwireless.com.br/novo/wp-content/uploads/2015/12/fibra.jpeg); background-repeat: no-repeat; background-size: 100%">
+        <p/>
+        <h:form id="formPrincipal">
+            <p:separator />
+            <p:outputPanel style="width: 100%; text-align: right">
+                <p:commandButton icon="ui-icon-arrowreturn-1-w" value="Sair" type="button" onclick="window.location.href = 'http://localhost:8084/Provedor/'" />
+                <h2 style="font-family: sans-serif; padding-right: 35%; color:white;" >CIANORTE PROVEDORA</h2>
+            </p:outputPanel>
+            <p/>
+            <br/>
+            <br/>
+            <p/>
+            <br/>
+        </h:form>
+        <h:form>
+            <center>
+                <p:commandButton style="padding: 5px; margin: 5px;;"  value="Gerenciar Usuários" type="rrowreturn-1-wbutton" onclick="window.location.href = '/Provedor/faces/usuario/usuarioGerenciar.xhtml'" />
+                <p:commandButton style="padding: 5px; margin: 5px;;"  value="Gerenciar Planos" type="rrowreturn-1-wbutton" onclick="window.location.href = '/Provedor/faces/planos/planosGerenciar.xhtml'" />
+                <p:commandButton style="padding: 5px; margin: 5px;"  value="Gerenciar Serviços" type="rrowreturn-1-wbutton" onclick="window.location.href = '/Provedor/faces/servicos/servicoGerenciar.xhtml'" />
+                <p:commandButton style="padding: 5px; margin: 5px;"  value="Gerenciar Contratos" type="rrowreturn-1-wbutton" onclick="window.location.href = '/Provedor/faces/contrato/contratoGerenciar.xhtml'" />
+                <p/>
+            </center>
+        </h:form>
+    </h:body>
+</html>
